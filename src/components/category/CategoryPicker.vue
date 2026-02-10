@@ -29,8 +29,8 @@
   >
     <div class="category-picker-popup">
       <div class="picker-header">
-        <van-button text @click="showPicker = false">取消</van-button>
-        <span class="picker-title">選擇分類</span>
+        <van-button text @click="showPicker = false">キャンセル</van-button>
+        <span class="picker-title">カテゴリーを選択</span>
         <van-button type="primary" text @click="handleConfirm">確定</van-button>
       </div>
 
@@ -72,11 +72,11 @@ const props = defineProps({
   },
   label: {
     type: String,
-    default: '分類'
+    default: 'カテゴリー'
   },
   placeholder: {
     type: String,
-    default: '請選擇分類'
+    default: 'カテゴリーを選択してください'
   },
   rules: {
     type: Array,

@@ -3,15 +3,15 @@
     <!-- Loading State -->
     <div v-if="isLoading" class="loading-screen">
       <div class="spinner"></div>
-      <p>正在初始化...</p>
+      <p>初期化中...</p>
     </div>
 
     <!-- Error State -->
     <div v-else-if="error" class="error-screen">
       <van-icon name="warning-o" size="48" color="#EE0A24" />
-      <h2>初始化失敗</h2>
+      <h2>初期化に失敗しました</h2>
       <p>{{ error }}</p>
-      <van-button type="primary" @click="retryInit">重試</van-button>
+      <van-button type="primary" @click="retryInit">再試行</van-button>
     </div>
 
     <!-- Main App Content -->
@@ -32,13 +32,13 @@
         class="app-tabbar"
       >
         <van-tabbar-item to="/" icon="calendar-o">
-          日曆
+          カレンダー
         </van-tabbar-item>
         <van-tabbar-item to="/schedules" icon="orders-o">
-          列表
+          リスト
         </van-tabbar-item>
         <van-tabbar-item to="/settings" icon="setting-o">
-          設置
+          設定
         </van-tabbar-item>
       </van-tabbar>
     </div>

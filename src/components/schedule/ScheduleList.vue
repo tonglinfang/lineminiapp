@@ -12,7 +12,7 @@
 
       <van-search
         v-model="searchQuery"
-        placeholder="搜索日程"
+        placeholder="スケジュールを検索"
         @search="handleSearch"
         @clear="handleSearch"
       />
@@ -27,7 +27,7 @@
       >
         <div class="group-header">
           <h3 class="group-date">{{ group.dateDisplay }}</h3>
-          <span class="group-count">{{ group.schedules.length }} 個日程</span>
+          <span class="group-count">{{ group.schedules.length }} 件</span>
         </div>
 
         <div class="group-items">
@@ -50,9 +50,9 @@
     <empty-state
       v-else
       icon="orders-o"
-      title="沒有日程"
-      description="還沒有創建任何日程"
-      action-text="創建日程"
+      title="予定なし"
+      description="まだスケジュールが作成されていません"
+      action-text="スケジュールを作成"
       @action="$emit('create')"
     />
 
@@ -63,7 +63,7 @@
       type="spinner"
       color="var(--primary-color)"
     >
-      載入中...
+      読み込み中...
     </van-loading>
   </div>
 </template>
@@ -120,7 +120,7 @@ const searchQuery = ref('')
 // Computed
 const categoryOptions = computed(() => {
   return [
-    { text: '全部分類', value: null },
+    { text: '全てのカテゴリー', value: null },
     ...categoryStore.allCategories.map(cat => ({
       text: cat.name,
       value: cat.id
@@ -185,17 +185,17 @@ function handleSearch() {
  */
 async function handleDelete(schedule) {
   const confirmed = await showConfirmDialog({
-    title: '確認刪除',
-    message: `確定要刪除「${schedule.title}」嗎？`
+    title: '削除確認',
+    message: `「${schedule.title}」を削除してもよろしいですか？`
   }).catch(() => false)
 
   if (confirmed) {
     const success = await scheduleStore.deleteSchedule(schedule.id)
     if (success) {
-      showToast('已刪除')
+      showToast('削除しました')
       emit('schedule-delete', schedule)
     } else {
-      showToast('刪除失敗')
+      showToast('削除に失敗しました')
     }
   }
 }

@@ -44,7 +44,7 @@ export function formatTime(time, use24Hour = true) {
     // Convert to 12-hour format
     const [hour, minute] = time.split(':')
     const h = parseInt(hour)
-    const period = h >= 12 ? '下午' : '上午'
+    const period = h >= 12 ? '午後' : '午前'
     const displayHour = h > 12 ? h - 12 : h === 0 ? 12 : h
     return `${period} ${displayHour}:${minute}`
   }
@@ -325,11 +325,11 @@ export function getRelativeDate(date) {
   const today = dayjs()
   const diff = target.diff(today, 'day')
 
-  if (diff === 0) return '今天'
-  if (diff === 1) return '明天'
-  if (diff === -1) return '昨天'
-  if (diff > 1 && diff <= 7) return `${diff}天後`
-  if (diff < -1 && diff >= -7) return `${Math.abs(diff)}天前`
+  if (diff === 0) return '今日'
+  if (diff === 1) return '明日'
+  if (diff === -1) return '昨日'
+  if (diff > 1 && diff <= 7) return `${diff}日後`
+  if (diff < -1 && diff >= -7) return `${Math.abs(diff)}日前`
 
   return formatDate(date, DATE_FORMATS.DISPLAY)
 }

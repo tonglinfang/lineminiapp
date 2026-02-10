@@ -288,8 +288,8 @@ export function useNotification() {
    * Test notification (for debugging)
    */
   function testNotification() {
-    showNotification('測試通知', {
-      body: '這是一個測試通知，用於確認通知功能正常工作。',
+    showNotification('テスト通知', {
+      body: 'これはテスト通知です。通知機能が正常に動作していることを確認します。',
       icon: '/favicon.ico'
     })
   }

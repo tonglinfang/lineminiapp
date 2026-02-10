@@ -1,7 +1,7 @@
 <template>
   <div class="schedule-create-view">
     <van-nav-bar
-      title="創建日程"
+      title="スケジュールを作成"
       left-arrow
       @click-left="handleBack"
     />
@@ -38,12 +38,12 @@ async function handleSubmit(formData) {
 
   try {
     await scheduleStore.createSchedule(formData)
-    showToast('創建成功')
+    showToast('作成しました')
 
     // Navigate back
     router.back()
   } catch (error) {
-    showToast(error.message || '創建失敗')
+    showToast(error.message || '作成できませんでした')
   } finally {
     loading.value = false
   }

@@ -20,7 +20,7 @@ export const STORAGE_KEYS = {
 export const DEFAULT_CATEGORIES = [
   {
     id: 'work',
-    name: '工作',
+    name: '仕事',
     nameEn: 'Work',
     color: '#FF6B6B',
     icon: 'briefcase-o'
@@ -41,21 +41,21 @@ export const DEFAULT_CATEGORIES = [
   },
   {
     id: 'study',
-    name: '學習',
+    name: '学習',
     nameEn: 'Study',
     color: '#FFE66D',
     icon: 'book-o'
   },
   {
     id: 'entertainment',
-    name: '娛樂',
+    name: '娯楽',
     nameEn: 'Entertainment',
     color: '#C7CEEA',
     icon: 'smile-o'
   },
   {
     id: 'other',
-    name: '其他',
+    name: 'その他',
     nameEn: 'Other',
     color: '#B0B0B0',
     icon: 'ellipsis'
@@ -64,14 +64,14 @@ export const DEFAULT_CATEGORIES = [
 
 // Reminder Time Options
 export const REMINDER_OPTIONS = [
-  { label: '不提醒', value: 0, unit: 'minutes' },
-  { label: '準時提醒', value: 0, unit: 'minutes' },
-  { label: '5分鐘前', value: 5, unit: 'minutes' },
-  { label: '15分鐘前', value: 15, unit: 'minutes' },
-  { label: '30分鐘前', value: 30, unit: 'minutes' },
-  { label: '1小時前', value: 1, unit: 'hours' },
-  { label: '2小時前', value: 2, unit: 'hours' },
-  { label: '1天前', value: 1, unit: 'days' }
+  { label: '通知しない', value: 0, unit: 'minutes' },
+  { label: '時刻通りに通知', value: 0, unit: 'minutes' },
+  { label: '5分前', value: 5, unit: 'minutes' },
+  { label: '15分前', value: 15, unit: 'minutes' },
+  { label: '30分前', value: 30, unit: 'minutes' },
+  { label: '1時間前', value: 1, unit: 'hours' },
+  { label: '2時間前', value: 2, unit: 'hours' },
+  { label: '1日前', value: 1, unit: 'days' }
 ]
 
 // View Modes
@@ -83,22 +83,22 @@ export const VIEW_MODES = {
 }
 
 // Weekday Labels (Sunday = 0)
-export const WEEKDAYS_SHORT = ['日', '一', '二', '三', '四', '五', '六']
-export const WEEKDAYS_FULL = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+export const WEEKDAYS_SHORT = ['日', '月', '火', '水', '木', '金', '土']
+export const WEEKDAYS_FULL = ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日']
 
 // Date Formats
 export const DATE_FORMATS = {
-  DISPLAY: 'YYYY年MM月DD日',
+  DISPLAY: 'YYYY年M月D日',
   ISO: 'YYYY-MM-DD',
   TIME: 'HH:mm',
   DATETIME: 'YYYY-MM-DD HH:mm',
-  FULL: 'YYYY年MM月DD日 HH:mm'
+  FULL: 'YYYY年M月D日 HH:mm'
 }
 
 // App Config
 export const APP_CONFIG = {
   VERSION: '1.0.0',
-  NAME: '日程管理',
+  NAME: 'スケジュール管理',
   NAME_EN: 'Schedule Manager',
   MAX_SCHEDULES: 1000, // Maximum schedules per user
   MAX_TAGS: 50, // Maximum custom tags per user
@@ -107,23 +107,23 @@ export const APP_CONFIG = {
 
 // Error Messages
 export const ERROR_MESSAGES = {
-  LIFF_INIT_FAILED: 'LIFF 初始化失敗，請重新打開應用',
-  PROFILE_FETCH_FAILED: '無法獲取用戶資料',
-  STORAGE_ERROR: '數據存儲失敗，請檢查瀏覽器設置',
-  NOTIFICATION_PERMISSION_DENIED: '通知權限被拒絕',
-  SCHEDULE_CREATE_FAILED: '創建日程失敗',
-  SCHEDULE_UPDATE_FAILED: '更新日程失敗',
-  SCHEDULE_DELETE_FAILED: '刪除日程失敗',
-  INVALID_DATE: '日期格式不正確',
-  REQUIRED_FIELD: '請填寫必填欄位'
+  LIFF_INIT_FAILED: 'LIFFの初期化に失敗しました。アプリを再度開いてください',
+  PROFILE_FETCH_FAILED: 'ユーザー情報を取得できません',
+  STORAGE_ERROR: 'データの保存に失敗しました。ブラウザの設定を確認してください',
+  NOTIFICATION_PERMISSION_DENIED: '通知権限が拒否されました',
+  SCHEDULE_CREATE_FAILED: 'スケジュールの作成に失敗しました',
+  SCHEDULE_UPDATE_FAILED: 'スケジュールの更新に失敗しました',
+  SCHEDULE_DELETE_FAILED: 'スケジュールの削除に失敗しました',
+  INVALID_DATE: '日付形式が正しくありません',
+  REQUIRED_FIELD: '必須項目を入力してください'
 }
 
 // Success Messages
 export const SUCCESS_MESSAGES = {
-  SCHEDULE_CREATED: '日程創建成功',
-  SCHEDULE_UPDATED: '日程更新成功',
-  SCHEDULE_DELETED: '日程已刪除',
-  SETTINGS_SAVED: '設置已保存'
+  SCHEDULE_CREATED: 'スケジュールを作成しました',
+  SCHEDULE_UPDATED: 'スケジュールを更新しました',
+  SCHEDULE_DELETED: 'スケジュールを削除しました',
+  SETTINGS_SAVED: '設定を保存しました'
 }
 
 // Notification Types

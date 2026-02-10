@@ -9,7 +9,7 @@
 
     <!-- Today's schedules section -->
     <div v-if="todaySchedules.length > 0" class="today-section">
-      <h3 class="section-title">今天的日程</h3>
+      <h3 class="section-title">今日の予定</h3>
       <div class="schedule-list">
         <div
           v-for="schedule in todaySchedules"
@@ -19,7 +19,7 @@
           @click="handleScheduleClick(schedule)"
         >
           <div class="schedule-time">
-            {{ schedule.isAllDay ? '全天' : schedule.startTime }}
+            {{ schedule.isAllDay ? '終日' : schedule.startTime }}
           </div>
           <div class="schedule-content">
             <div class="schedule-title">{{ schedule.title }}</div>
@@ -38,9 +38,9 @@
     <empty-state
       v-else
       icon="calendar-o"
-      title="今天沒有日程"
-      description="點擊日曆上的日期來創建新日程"
-      action-text="創建日程"
+      title="今日の予定はありません"
+      description="カレンダーの日付をクリックして新しいスケジュールを作成"
+      action-text="スケジュールを作成"
       @action="handleCreateSchedule"
     />
 
@@ -80,7 +80,7 @@ function getCategoryColor(categoryId) {
  */
 function getCategoryName(categoryId) {
   const category = categoryStore.getCategoryById(categoryId)
-  return category ? category.name : '其他'
+  return category ? category.name : 'その他'
 }
 
 /**

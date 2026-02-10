@@ -35,7 +35,7 @@
             @click.stop="handleScheduleClick(schedule)"
           >
             <div class="schedule-time">
-              {{ schedule.isAllDay ? '全天' : schedule.startTime }}
+              {{ schedule.isAllDay ? '終日' : schedule.startTime }}
             </div>
             <div class="schedule-title">{{ schedule.title }}</div>
           </div>
@@ -43,7 +43,7 @@
           <!-- Empty state -->
           <div v-if="getSchedulesForDate(dateObj.date).length === 0" class="day-empty">
             <van-icon name="calendar-o" size="24" color="var(--text-light)" />
-            <span>無日程</span>
+            <span>予定なし</span>
           </div>
         </div>
       </div>

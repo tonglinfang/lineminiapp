@@ -42,7 +42,7 @@
       type="spinner"
       color="var(--primary-color)"
     >
-      載入中...
+      読み込み中...
     </van-loading>
   </div>
 </template>

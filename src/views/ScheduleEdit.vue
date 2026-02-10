@@ -1,7 +1,7 @@
 <template>
   <div class="schedule-edit-view">
     <van-nav-bar
-      title="編輯日程"
+      title="スケジュールを編集"
       left-arrow
       @click-left="handleBack"
     >
@@ -25,9 +25,9 @@
 
     <van-empty
       v-else-if="!loading"
-      description="日程不存在"
+      description="スケジュールが見つかりません"
     >
-      <van-button type="primary" @click="handleBack">返回</van-button>
+      <van-button type="primary" @click="handleBack">戻る</van-button>
     </van-empty>
 
     <van-loading
@@ -36,7 +36,7 @@
       type="spinner"
       color="var(--primary-color)"
     >
-      載入中...
+      読み込み中...
     </van-loading>
   </div>
 </template>
@@ -83,10 +83,10 @@ async function handleSubmit(formData) {
 
   try {
     await scheduleStore.updateSchedule(schedule.value.id, formData)
-    showToast('更新成功')
+    showToast('更新しました')
     router.back()
   } catch (error) {
-    showToast(error.message || '更新失敗')
+    showToast(error.message || '更新できませんでした')
   } finally {
     loading.value = false
   }
@@ -97,17 +97,17 @@ async function handleSubmit(formData) {
  */
 async function handleDelete() {
   const confirmed = await showConfirmDialog({
-    title: '確認刪除',
-    message: `確定要刪除「${schedule.value.title}」嗎？`
+    title: '削除の確認',
+    message: `「${schedule.value.title}」を削除してもよろしいですか？`
   }).catch(() => false)
 
   if (confirmed) {
     const success = await scheduleStore.deleteSchedule(schedule.value.id)
     if (success) {
-      showToast('已刪除')
+      showToast('削除しました')
       router.push('/')
     } else {
-      showToast('刪除失敗')
+      showToast('削除できませんでした')
     }
   }
 }

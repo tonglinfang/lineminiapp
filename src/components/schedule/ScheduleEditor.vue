@@ -4,10 +4,10 @@
       <!-- Title -->
       <van-field
         v-model="form.title"
-        label="標題"
-        placeholder="請輸入日程標題"
+        label="タイトル"
+        placeholder="タイトルを入力してください"
         required
-        :rules="[{ required: true, message: '請輸入標題' }]"
+        :rules="[{ required: true, message: 'タイトルを入力してください' }]"
         maxlength="50"
         show-word-limit
       />
@@ -15,9 +15,9 @@
       <!-- Description -->
       <van-field
         v-model="form.description"
-        label="描述"
+        label="説明"
         type="textarea"
-        placeholder="請輸入描述（可選）"
+        placeholder="説明を入力してください（任意）"
         rows="3"
         autosize
         maxlength="200"
@@ -26,9 +26,9 @@
 
       <!-- Start Date -->
       <van-field
-        label="開始日期"
+        label="開始日"
         :model-value="formatDate(form.startDate)"
-        placeholder="請選擇開始日期"
+        placeholder="開始日を選択してください"
         readonly
         required
         clickable
@@ -42,9 +42,9 @@
       <!-- Start Time (hidden if all-day) -->
       <van-field
         v-if="!form.isAllDay"
-        label="開始時間"
+        label="開始時刻"
         :model-value="form.startTime"
-        placeholder="請選擇開始時間"
+        placeholder="開始時刻を選択してください"
         readonly
         clickable
         @click="showStartTimePicker = true"
@@ -56,9 +56,9 @@
 
       <!-- End Date -->
       <van-field
-        label="結束日期"
+        label="終了日"
         :model-value="formatDate(form.endDate)"
-        placeholder="請選擇結束日期"
+        placeholder="終了日を選択してください"
         readonly
         clickable
         @click="showEndDatePicker = true"
@@ -71,9 +71,9 @@
       <!-- End Time (hidden if all-day) -->
       <van-field
         v-if="!form.isAllDay"
-        label="結束時間"
+        label="終了時刻"
         :model-value="form.endTime"
-        placeholder="請選擇結束時間"
+        placeholder="終了時刻を選択してください"
         readonly
         clickable
         @click="showEndTimePicker = true"
@@ -84,7 +84,7 @@
       </van-field>
 
       <!-- All Day Toggle -->
-      <van-field label="全天">
+      <van-field label="終日">
         <template #input>
           <van-switch v-model="form.isAllDay" size="20" />
         </template>
@@ -93,14 +93,14 @@
       <!-- Category -->
       <category-picker
         v-model="form.category"
-        :rules="[{ required: true, message: '請選擇分類' }]"
+        :rules="[{ required: true, message: 'カテゴリーを選択してください' }]"
       />
 
       <!-- Color -->
       <color-picker v-model="form.color" />
 
       <!-- Tags -->
-      <van-field label="標籤">
+      <van-field label="タグ">
         <template #input>
           <div class="tag-list">
             <van-tag
@@ -117,14 +117,14 @@
               plain
               @click="showTagInput = true"
             >
-              添加
+              追加
             </van-button>
           </div>
         </template>
       </van-field>
 
       <!-- Reminder -->
-      <van-field label="提醒">
+      <van-field label="リマインダー">
         <template #input>
           <van-switch v-model="form.reminder.enabled" size="20" />
         </template>
@@ -133,7 +133,7 @@
       <!-- Reminder Time (shown if reminder enabled) -->
       <van-field
         v-if="form.reminder.enabled"
-        label="提前提醒"
+        label="事前通知"
         :model-value="getReminderDisplay()"
         readonly
         clickable
@@ -152,14 +152,14 @@
           native-type="submit"
           :loading="loading"
         >
-          {{ isEdit ? '更新日程' : '創建日程' }}
+          {{ isEdit ? 'スケジュールを更新' : 'スケジュールを作成' }}
         </van-button>
         <van-button
           v-if="showCancel"
           block
           @click="$emit('cancel')"
         >
-          取消
+          キャンセル
         </van-button>
       </div>
     </van-form>
@@ -168,7 +168,7 @@
     <van-popup v-model:show="showStartDatePicker" position="bottom" round>
       <van-date-picker
         v-model="startDateValue"
-        title="選擇開始日期"
+        title="開始日を選択"
         :min-date="new Date(2020, 0, 1)"
         :max-date="new Date(2030, 11, 31)"
         @confirm="handleStartDateConfirm"
@@ -179,7 +179,7 @@
     <van-popup v-model:show="showEndDatePicker" position="bottom" round>
       <van-date-picker
         v-model="endDateValue"
-        title="選擇結束日期"
+        title="終了日を選択"
         :min-date="new Date(form.startDate)"
         :max-date="new Date(2030, 11, 31)"
         @confirm="handleEndDateConfirm"
@@ -191,7 +191,7 @@
     <van-popup v-model:show="showStartTimePicker" position="bottom" round>
       <van-time-picker
         v-model="startTimeValue"
-        title="選擇開始時間"
+        title="開始時刻を選択"
         @confirm="handleStartTimeConfirm"
         @cancel="showStartTimePicker = false"
       />
@@ -200,7 +200,7 @@
     <van-popup v-model:show="showEndTimePicker" position="bottom" round>
       <van-time-picker
         v-model="endTimeValue"
-        title="選擇結束時間"
+        title="終了時刻を選択"
         @confirm="handleEndTimeConfirm"
         @cancel="showEndTimePicker = false"
       />
@@ -218,13 +218,13 @@
     <!-- Tag Input Dialog -->
     <van-dialog
       v-model:show="showTagInput"
-      title="添加標籤"
+      title="タグを追加"
       show-cancel-button
       @confirm="handleAddTag"
     >
       <van-field
         v-model="newTag"
-        placeholder="請輸入標籤名稱"
+        placeholder="タグ名を入力してください"
         maxlength="10"
       />
     </van-dialog>
@@ -379,7 +379,7 @@ function getReminderDisplay() {
   const option = REMINDER_OPTIONS.find(
     opt => opt.value === form.value.reminder.time
   )
-  return option ? option.label : '15分鐘前'
+  return option ? option.label : '15分前'
 }
 
 /**
@@ -406,12 +406,12 @@ function removeTag(index) {
 function handleSubmit() {
   // Validate
   if (!form.value.title) {
-    showToast('請輸入標題')
+    showToast('タイトルを入力してください')
     return
   }
 
   if (!form.value.startDate) {
-    showToast('請選擇開始日期')
+    showToast('開始日を選択してください')
     return
   }
 

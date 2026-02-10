@@ -12,7 +12,7 @@ export const config = {
 
   // App Metadata
   app: {
-    title: import.meta.env.VITE_APP_TITLE || '日程管理',
+    title: import.meta.env.VITE_APP_TITLE || 'スケジュール管理',
     env: import.meta.env.VITE_APP_ENV || 'development',
     version: '1.0.0'
   },

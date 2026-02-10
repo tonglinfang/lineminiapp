@@ -1,6 +1,6 @@
 <template>
   <div class="schedule-list-view">
-    <van-nav-bar title="日程列表">
+    <van-nav-bar title="スケジュール一覧">
       <template #right>
         <van-icon name="plus" size="20" @click="handleCreate" />
       </template>

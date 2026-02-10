@@ -22,7 +22,7 @@ const routes = [
     name: 'Home',
     component: Home,
     meta: {
-      title: '日曆',
+      title: 'カレンダー',
       requiresAuth: true,
       showTabbar: true
     }
@@ -32,7 +32,7 @@ const routes = [
     name: 'ScheduleList',
     component: ScheduleList,
     meta: {
-      title: '日程列表',
+      title: 'スケジュール一覧',
       requiresAuth: true,
       showTabbar: true
     }
@@ -42,7 +42,7 @@ const routes = [
     name: 'ScheduleCreate',
     component: ScheduleCreate,
     meta: {
-      title: '創建日程',
+      title: 'スケジュールを作成',
       requiresAuth: true,
       showTabbar: false
     }
@@ -52,7 +52,7 @@ const routes = [
     name: 'ScheduleEdit',
     component: ScheduleEdit,
     meta: {
-      title: '編輯日程',
+      title: 'スケジュールを編集',
       requiresAuth: true,
       showTabbar: false
     }
@@ -62,7 +62,7 @@ const routes = [
     name: 'Settings',
     component: Settings,
     meta: {
-      title: '設置',
+      title: '設定',
       requiresAuth: true,
       showTabbar: true
     }
@@ -106,7 +106,7 @@ router.beforeEach((to, from, next) => {
 
   // Update document title
   if (to.meta.title) {
-    document.title = `${to.meta.title} - 日程管理`
+    document.title = `${to.meta.title} - スケジュール管理`
   }
 
   next()

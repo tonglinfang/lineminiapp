@@ -37,7 +37,7 @@
         @click="handleToday"
         :disabled="isToday"
       >
-        今天
+        今日
       </van-button>
 
       <van-button

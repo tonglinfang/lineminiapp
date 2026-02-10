@@ -69,14 +69,14 @@
     <template #right>
       <van-button
         square
-        text="編輯"
+        text="編集"
         type="primary"
         class="swipe-button"
         @click="$emit('edit', schedule)"
       />
       <van-button
         square
-        text="刪除"
+        text="削除"
         type="danger"
         class="swipe-button"
         @click="$emit('delete', schedule)"
@@ -120,12 +120,12 @@ const categoryColor = computed(() => {
 
 const categoryName = computed(() => {
   const category = categoryStore.getCategoryById(props.schedule.category)
-  return category?.name || '其他'
+  return category?.name || 'その他'
 })
 
 const timeDisplay = computed(() => {
   if (props.schedule.isAllDay) {
-    return '全天'
+    return '終日'
   }
   return `${props.schedule.startTime} - ${props.schedule.endTime}`
 })

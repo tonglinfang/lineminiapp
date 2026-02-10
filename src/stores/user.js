@@ -19,7 +19,7 @@ export const useUserStore = defineStore('user', {
       defaultView: VIEW_MODES.MONTH, // Default calendar view
       weekStartsOn: 0, // 0 = Sunday, 1 = Monday
       timeFormat: '24h', // '12h' or '24h'
-      language: 'zh-TW', // 'zh-TW', 'en', etc.
+      language: 'ja', // 'ja', 'en', etc.
       theme: 'light', // 'light' or 'dark'
       notifications: {
         enabled: true,
@@ -38,7 +38,7 @@ export const useUserStore = defineStore('user', {
     /**
      * Get user display name or fallback
      */
-    userName: (state) => state.displayName || '用戶',
+    userName: (state) => state.displayName || 'ユーザー',
 
     /**
      * Get user avatar URL or placeholder
@@ -160,7 +160,7 @@ export const useUserStore = defineStore('user', {
         defaultView: VIEW_MODES.MONTH,
         weekStartsOn: 0,
         timeFormat: '24h',
-        language: 'zh-TW',
+        language: 'ja',
         theme: 'light',
         notifications: {
           enabled: true,

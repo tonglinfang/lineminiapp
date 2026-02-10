@@ -1,9 +1,9 @@
 <template>
   <div class="settings-view">
-    <van-nav-bar title="設置" />
+    <van-nav-bar title="設定" />
 
     <!-- User Info Section -->
-    <van-cell-group title="用戶信息" inset>
+    <van-cell-group title="ユーザー情報" inset>
       <van-cell
         :title="userStore.displayName"
         :label="`User ID: ${userStore.userId}`"
@@ -21,8 +21,8 @@
     </van-cell-group>
 
     <!-- Notification Settings -->
-    <van-cell-group title="通知設置" inset>
-      <van-cell title="通知權限">
+    <van-cell-group title="通知設定" inset>
+      <van-cell title="通知権限">
         <template #value>
           <van-tag
             :type="notificationStatus.type"
@@ -35,12 +35,12 @@
 
       <van-cell
         v-if="notification.permission !== 'granted'"
-        title="請求通知權限"
+        title="通知権限をリクエスト"
         is-link
         @click="handleRequestPermission"
       />
 
-      <van-cell title="啟用提醒">
+      <van-cell title="リマインダーを有効にする">
         <template #right-icon>
           <van-switch
             v-model="userStore.preferences.notifications.enabled"
@@ -51,92 +51,92 @@
       </van-cell>
 
       <van-cell
-        title="默認提醒時間"
+        title="デフォルトのリマインダー時間"
         :value="defaultReminderDisplay"
         is-link
         :disabled="!userStore.preferences.notifications.enabled"
         @click="showReminderPicker = true"
       />
 
-      <van-cell title="已調度的提醒">
+      <van-cell title="スケジュール済みリマインダー">
         <template #value>
-          {{ notification.getScheduledCount() }} 個
+          {{ notification.getScheduledCount() }} 件
         </template>
       </van-cell>
     </van-cell-group>
 
     <!-- Calendar Settings -->
-    <van-cell-group title="日曆設置" inset>
+    <van-cell-group title="カレンダー設定" inset>
       <van-cell
-        title="默認視圖"
+        title="デフォルト表示"
         :value="defaultViewDisplay"
         is-link
         @click="showViewPicker = true"
       />
 
-      <van-cell title="週起始日">
+      <van-cell title="週の開始日">
         <template #value>
           <van-radio-group
             v-model="userStore.preferences.weekStartsOn"
             direction="horizontal"
             @change="userStore.savePreferences()"
           >
-            <van-radio :name="0">週日</van-radio>
-            <van-radio :name="1">週一</van-radio>
+            <van-radio :name="0">日曜日</van-radio>
+            <van-radio :name="1">月曜日</van-radio>
           </van-radio-group>
         </template>
       </van-cell>
     </van-cell-group>
 
     <!-- Data Management -->
-    <van-cell-group title="數據管理" inset>
+    <van-cell-group title="データ管理" inset>
       <van-cell
-        title="日程數量"
-        :value="`${scheduleStore.activeSchedules.length} 個`"
+        title="スケジュール数"
+        :value="`${scheduleStore.activeSchedules.length} 件`"
       />
 
       <van-cell
-        title="存儲使用"
+        title="ストレージ使用量"
         :value="`${storageStats.sizeKB} KB / ${storageStats.percentUsed}%`"
       />
 
       <van-cell
-        title="導出數據"
+        title="データをエクスポート"
         is-link
         @click="handleExportData"
       />
 
       <van-cell
-        title="導入數據"
+        title="データをインポート"
         is-link
         @click="handleImportData"
       />
 
       <van-cell
-        title="清除所有數據"
+        title="すべてのデータをクリア"
         is-link
         @click="handleClearData"
       />
     </van-cell-group>
 
     <!-- Testing -->
-    <van-cell-group title="測試" inset>
+    <van-cell-group title="テスト" inset>
       <van-cell
-        title="測試通知"
+        title="通知をテスト"
         is-link
         @click="handleTestNotification"
       />
     </van-cell-group>
 
     <!-- About -->
-    <van-cell-group title="關於" inset>
+    <van-cell-group title="について" inset>
       <van-cell
-        title="版本"
+        title="バージョン"
         :value="appVersion"
       />
 
       <van-cell
-        title="LINE 環境"
+        title="LINE環境"
         :value="liffEnv"
       />
     </van-cell-group>
@@ -185,28 +185,28 @@ const showViewPicker = ref(false)
 // Computed
 const notificationStatus = computed(() => {
   if (notification.permission === 'granted') {
-    return { text: '已授權', type: 'success' }
+    return { text: '許可済み', type: 'success' }
   } else if (notification.permission === 'denied') {
-    return { text: '已拒絕', type: 'danger' }
+    return { text: '拒否済み', type: 'danger' }
   } else {
-    return { text: '未請求', type: 'warning' }
+    return { text: '未リクエスト', type: 'warning' }
   }
 })
 
 const defaultReminderDisplay = computed(() => {
   const time = userStore.preferences.notifications.defaultReminderTime
   const option = REMINDER_OPTIONS.find(opt => opt.value === time)
-  return option ? option.label : '15分鐘前'
+  return option ? option.label : '15分前'
 })
 
 const defaultViewDisplay = computed(() => {
   const viewMap = {
-    [VIEW_MODES.MONTH]: '月視圖',
-    [VIEW_MODES.WEEK]: '週視圖',
-    [VIEW_MODES.DAY]: '日視圖',
-    [VIEW_MODES.LIST]: '列表視圖'
+    [VIEW_MODES.MONTH]: '月表示',
+    [VIEW_MODES.WEEK]: '週表示',
+    [VIEW_MODES.DAY]: '日表示',
+    [VIEW_MODES.LIST]: 'リスト表示'
   }
-  return viewMap[userStore.preferences.defaultView] || '月視圖'
+  return viewMap[userStore.preferences.defaultView] || '月表示'
 })
 
 const storageStats = computed(() => storage.storageStats)
@@ -215,7 +215,7 @@ const appVersion = computed(() => APP_CONFIG.VERSION)
 
 const liffEnv = computed(() => {
   const os = getOS()
-  return os === 'web' ? '瀏覽器' : `LINE (${os})`
+  return os === 'web' ? 'ブラウザ' : `LINE (${os})`
 })
 
 const reminderOptions = REMINDER_OPTIONS.map(opt => ({
@@ -224,10 +224,10 @@ const reminderOptions = REMINDER_OPTIONS.map(opt => ({
 }))
 
 const viewOptions = [
-  { text: '月視圖', value: VIEW_MODES.MONTH },
-  { text: '週視圖', value: VIEW_MODES.WEEK },
-  { text: '日視圖', value: VIEW_MODES.DAY },
-  { text: '列表視圖', value: VIEW_MODES.LIST }
+  { text: '月表示', value: VIEW_MODES.MONTH },
+  { text: '週表示', value: VIEW_MODES.WEEK },
+  { text: '日表示', value: VIEW_MODES.DAY },
+  { text: 'リスト表示', value: VIEW_MODES.LIST }
 ]
 
 /**
@@ -236,11 +236,11 @@ const viewOptions = [
 async function handleRequestPermission() {
   const result = await notification.requestPermission()
   if (result === 'granted') {
-    showToast('通知權限已授予')
+    showToast('通知権限が許可されました')
     // Reschedule all notifications
     notification.rescheduleAll(scheduleStore.schedules)
   } else if (result === 'denied') {
-    showToast('通知權限被拒絕')
+    showToast('通知権限が拒否されました')
   }
 }
 
@@ -253,11 +253,11 @@ function handleToggleNotifications(enabled) {
   if (enabled) {
     // Reschedule all notifications
     notification.rescheduleAll(scheduleStore.schedules)
-    showToast('提醒已啟用')
+    showToast('リマインダーを有効にしました')
   } else {
     // Cancel all notifications
     notification.cancelAllNotifications()
-    showToast('提醒已關閉')
+    showToast('リマインダーを無効にしました')
   }
 }
 
@@ -269,7 +269,7 @@ function handleReminderConfirm(value) {
     defaultReminderTime: value.value
   })
   showReminderPicker.value = false
-  showToast('已保存')
+  showToast('保存しました')
 }
 
 /**
@@ -278,7 +278,7 @@ function handleReminderConfirm(value) {
 function handleViewConfirm(value) {
   userStore.updatePreference('defaultView', value.value)
   showViewPicker.value = false
-  showToast('已保存')
+  showToast('保存しました')
 }
 
 /**
@@ -295,9 +295,9 @@ function handleExportData() {
     a.download = `schedules-${new Date().toISOString().split('T')[0]}.json`
     a.click()
     URL.revokeObjectURL(url)
-    showToast('導出成功')
+    showToast('エクスポートしました')
   } catch (error) {
-    showToast('導出失敗')
+    showToast('エクスポートできませんでした')
     console.error('Export failed:', error)
   }
 }
@@ -319,22 +319,22 @@ function handleImportData() {
       const data = JSON.parse(text)
 
       const confirmed = await showConfirmDialog({
-        title: '確認導入',
-        message: `將導入 ${data.schedules?.length || 0} 個日程，是否繼續？`
+        title: 'インポートの確認',
+        message: `${data.schedules?.length || 0} 件のスケジュールをインポートします。続行しますか？`
       })
 
       if (confirmed) {
         const success = await scheduleStore.importSchedules(data, true)
         if (success) {
-          showToast('導入成功')
+          showToast('インポートしました')
           // Reschedule notifications
           notification.rescheduleAll(scheduleStore.schedules)
         } else {
-          showToast('導入失敗')
+          showToast('インポートできませんでした')
         }
       }
     } catch (error) {
-      showToast('文件格式錯誤')
+      showToast('ファイル形式が正しくありません')
       console.error('Import failed:', error)
     }
   }
@@ -347,15 +347,15 @@ function handleImportData() {
  */
 async function handleClearData() {
   const confirmed = await showConfirmDialog({
-    title: '確認清除',
-    message: '此操作將清除所有日程數據，且無法恢復！'
+    title: 'クリアの確認',
+    message: 'この操作はすべてのスケジュールデータをクリアします。元に戻せません！'
   }).catch(() => false)
 
   if (confirmed) {
     storage.clearUserData()
     await scheduleStore.loadSchedules()
     notification.cancelAllNotifications()
-    showToast('數據已清除')
+    showToast('データをクリアしました')
   }
 }
 
@@ -364,12 +364,12 @@ async function handleClearData() {
  */
 function handleTestNotification() {
   if (!notification.isGranted()) {
-    showToast('請先授予通知權限')
+    showToast('先に通知権限を許可してください')
     return
   }
 
   notification.testNotification()
-  showToast('測試通知已發送')
+  showToast('テスト通知を送信しました')
 }
 
 onMounted(() => {
