@@ -291,10 +291,10 @@ const showReminderPicker = ref(false)
 const showTagInput = ref(false)
 
 // Picker values (for van-date-picker format)
-const startDateValue = ref(new Date())
-const endDateValue = ref(new Date())
-const startTimeValue = ref(['12', '00'])
-const endTimeValue = ref(['12', '00'])
+const startDateValue = ref(toPickerDate(form.value.startDate))
+const endDateValue = ref(toPickerDate(form.value.endDate))
+const startTimeValue = ref(toPickerTime(form.value.startTime))
+const endTimeValue = ref(toPickerTime(form.value.endTime))
 
 // Tag input
 const newTag = ref('')
@@ -311,6 +311,35 @@ const reminderOptions = computed(() => {
 // Initialize form with existing data
 if (props.initialData) {
   Object.assign(form.value, props.initialData)
+  syncPickerValues()
+}
+
+/**
+ * Convert YYYY-MM-DD to picker array
+ */
+function toPickerDate(dateStr) {
+  const base = dateStr || getCurrentDate()
+  const [year, month, day] = base.split('-')
+  return [year, month, day]
+}
+
+/**
+ * Convert HH:mm to picker array
+ */
+function toPickerTime(timeStr) {
+  const base = timeStr || getCurrentTime()
+  const [hour, minute] = base.split(':')
+  return [hour, minute]
+}
+
+/**
+ * Sync picker values from form state
+ */
+function syncPickerValues() {
+  startDateValue.value = toPickerDate(form.value.startDate)
+  endDateValue.value = toPickerDate(form.value.endDate)
+  startTimeValue.value = toPickerTime(form.value.startTime)
+  endTimeValue.value = toPickerTime(form.value.endTime)
 }
 
 /**
@@ -324,15 +353,16 @@ function formatDate(date) {
  * Handle start date confirm
  */
 function handleStartDateConfirm(value) {
-  const year = value.getFullYear()
-  const month = String(value.getMonth() + 1).padStart(2, '0')
-  const day = String(value.getDate()).padStart(2, '0')
-  form.value.startDate = `${year}-${month}-${day}`
+  const selected = normalizeDatePickerValue(value)
+  const [year, month, day] = selected
+  form.value.startDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
+  startDateValue.value = selected
   showStartDatePicker.value = false
 
   // Auto-update end date if it's before start date
   if (form.value.endDate < form.value.startDate) {
     form.value.endDate = form.value.startDate
+    endDateValue.value = toPickerDate(form.value.endDate)
   }
 }
 
@@ -340,10 +370,10 @@ function handleStartDateConfirm(value) {
  * Handle end date confirm
  */
 function handleEndDateConfirm(value) {
-  const year = value.getFullYear()
-  const month = String(value.getMonth() + 1).padStart(2, '0')
-  const day = String(value.getDate()).padStart(2, '0')
-  form.value.endDate = `${year}-${month}-${day}`
+  const selected = normalizeDatePickerValue(value)
+  const [year, month, day] = selected
+  form.value.endDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
+  endDateValue.value = selected
   showEndDatePicker.value = false
 }
 
@@ -352,6 +382,7 @@ function handleEndDateConfirm(value) {
  */
 function handleStartTimeConfirm(value) {
   form.value.startTime = `${value[0]}:${value[1]}`
+  startTimeValue.value = value
   showStartTimePicker.value = false
 }
 
@@ -360,7 +391,30 @@ function handleStartTimeConfirm(value) {
  */
 function handleEndTimeConfirm(value) {
   form.value.endTime = `${value[0]}:${value[1]}`
+  endTimeValue.value = value
   showEndTimePicker.value = false
+}
+
+/**
+ * Normalize van-date-picker confirm payload
+ */
+function normalizeDatePickerValue(value) {
+  if (value instanceof Date) {
+    const year = String(value.getFullYear())
+    const month = String(value.getMonth() + 1).padStart(2, '0')
+    const day = String(value.getDate()).padStart(2, '0')
+    return [year, month, day]
+  }
+  if (Array.isArray(value)) {
+    return value
+  }
+  if (value && Array.isArray(value.selectedValues)) {
+    return value.selectedValues
+  }
+  if (value && Array.isArray(value.value)) {
+    return value.value
+  }
+  return toPickerDate(getCurrentDate())
 }
 
 /**
