@@ -72,21 +72,7 @@ async function initializeApp() {
     // App will still work in mock mode or show error UI
   }
 
-  // Request notification permission if not already granted
-  const notification = useNotification()
-  if (notification.isSupported && notification.permission === 'default') {
-    setTimeout(async () => {
-      const result = await notification.requestPermission()
-      if (result === 'granted') {
-        console.log('✅ Notification permission granted')
-        // Reschedule notifications after permission granted
-        const scheduleStore = useScheduleStore()
-        if (scheduleStore.schedules.length > 0) {
-          notification.rescheduleAll(scheduleStore.schedules)
-        }
-      }
-    }, 3000) // Wait 3 seconds before requesting permission
-  }
+  // Notification permission should be requested via user interaction (Settings screen)
 }
 
 // Start the app

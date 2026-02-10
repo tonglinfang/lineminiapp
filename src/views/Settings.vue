@@ -40,6 +40,12 @@
         @click="handleRequestPermission"
       />
 
+      <van-cell
+        v-if="notification.permission === 'denied'"
+        title="通知が拒否されています"
+        label="ブラウザ/OSの設定から通知を許可してください"
+      />
+
       <van-cell title="リマインダーを有効にする">
         <template #right-icon>
           <van-switch
@@ -234,6 +240,10 @@ const viewOptions = [
  * Handle request notification permission
  */
 async function handleRequestPermission() {
+  if (notification.permission === 'denied') {
+    showToast('ブラウザ/OSの設定から通知を許可してください')
+    return
+  }
   const result = await notification.requestPermission()
   if (result === 'granted') {
     showToast('通知権限が許可されました')
