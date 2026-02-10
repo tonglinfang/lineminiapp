@@ -29,6 +29,11 @@ async function initializeApp() {
   // Register Vue Router
   app.use(router)
 
+  // Expose router for notification click navigation
+  window.__APP_CONTEXT__ = {
+    router
+  }
+
   // Mount app immediately (LIFF will initialize in background)
   app.mount('#app')
 

@@ -10,6 +10,7 @@ import { useUserStore } from '@/stores/user'
 const Home = () => import('@/views/Home.vue')
 const ScheduleList = () => import('@/views/ScheduleList.vue')
 const ScheduleCreate = () => import('@/views/ScheduleCreate.vue')
+const ScheduleDetail = () => import('@/views/ScheduleDetail.vue')
 const ScheduleEdit = () => import('@/views/ScheduleEdit.vue')
 const Settings = () => import('@/views/Settings.vue')
 
@@ -43,6 +44,16 @@ const routes = [
     component: ScheduleCreate,
     meta: {
       title: 'スケジュールを作成',
+      requiresAuth: true,
+      showTabbar: false
+    }
+  },
+  {
+    path: '/schedule/:id',
+    name: 'ScheduleDetail',
+    component: ScheduleDetail,
+    meta: {
+      title: 'スケジュール詳細',
       requiresAuth: true,
       showTabbar: false
     }

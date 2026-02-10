@@ -23,7 +23,9 @@ export const useScheduleStore = defineStore('schedule', {
     error: null,
     selectedSchedule: null,
     filterCategory: null,
-    searchQuery: ''
+    searchQuery: '',
+    viewMode: 'month',
+    filterDate: null
   }),
 
   getters: {
@@ -123,6 +125,11 @@ export const useScheduleStore = defineStore('schedule', {
     filteredSchedules: (state) => {
       let result = state.schedules.filter(s => !s.isDeleted)
 
+      // Filter by date (startDate)
+      if (state.filterDate) {
+        result = result.filter(s => s.startDate === state.filterDate)
+      }
+
       // Filter by category
       if (state.filterCategory) {
         result = result.filter(s => s.category === state.filterCategory)
@@ -153,6 +160,16 @@ export const useScheduleStore = defineStore('schedule', {
   },
 
   actions: {
+    /**
+     * Toggle between month and week view modes
+     */
+    toggleViewMode() {
+      if (this.viewMode === 'month') {
+        this.viewMode = 'week'
+      } else {
+        this.viewMode = 'month'
+      }
+    },
     /**
      * Load schedules from localStorage
      */
@@ -390,6 +407,15 @@ export const useScheduleStore = defineStore('schedule', {
     clearFilters() {
       this.filterCategory = null
       this.searchQuery = ''
+      this.filterDate = null
+    },
+
+    /**
+     * Set date filter
+     * @param {string|null} date - Date in YYYY-MM-DD format
+     */
+    setFilterDate(date) {
+      this.filterDate = date
     },
 
     /**
@@ -428,4 +454,3 @@ export const useScheduleStore = defineStore('schedule', {
     }
   }
 })
-

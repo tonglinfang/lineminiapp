@@ -2,8 +2,16 @@
   <div class="home-view">
     <!-- Month calendar view -->
     <month-view
+      v-if="isMonthView"
       :loading="scheduleStore.loading"
       @date-click="handleDateClick"
+      @toggle-view="handleToggleView"
+    />
+
+    <week-view
+      v-else
+      @date-click="handleDateClick"
+      @schedule-click="handleScheduleClick"
       @toggle-view="handleToggleView"
     />
 
@@ -55,17 +63,21 @@
 
 <script setup>
 import { computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { useScheduleStore } from '@/stores/schedule'
 import { useCategoryStore } from '@/stores/category'
 import MonthView from '@/components/calendar/MonthView.vue'
+import WeekView from '@/components/calendar/WeekView.vue'
 import EmptyState from '@/components/common/EmptyState.vue'
 
 // Stores
 const scheduleStore = useScheduleStore()
 const categoryStore = useCategoryStore()
+const router = useRouter()
 
 // Computed
 const todaySchedules = computed(() => scheduleStore.todaySchedules)
+const isMonthView = computed(() => scheduleStore.viewMode === 'month')
 
 /**
  * Get category color
@@ -88,7 +100,14 @@ function getCategoryName(categoryId) {
  */
 function handleDateClick(dateObj) {
   console.log('Date clicked:', dateObj)
-  // TODO: Navigate to schedule list for this date or show popup
+  if (dateObj?.date) {
+    router.push({
+      path: '/schedules',
+      query: {
+        date: dateObj.date
+      }
+    })
+  }
 }
 
 /**
@@ -96,7 +115,9 @@ function handleDateClick(dateObj) {
  */
 function handleScheduleClick(schedule) {
   console.log('Schedule clicked:', schedule)
-  // TODO: Navigate to schedule detail page
+  if (schedule?.id) {
+    router.push(`/schedule/${schedule.id}`)
+  }
 }
 
 /**
@@ -104,7 +125,7 @@ function handleScheduleClick(schedule) {
  */
 function handleToggleView() {
   console.log('Toggle view')
-  // TODO: Switch between month/week views
+  scheduleStore.toggleViewMode()
 }
 
 /**
@@ -112,7 +133,7 @@ function handleToggleView() {
  */
 function handleCreateSchedule() {
   console.log('Create schedule')
-  // TODO: Navigate to create schedule page
+  router.push('/schedule/create')
 }
 
 onMounted(() => {

@@ -3,7 +3,7 @@
  * Handles browser notifications and schedule reminders
  */
 
-import { ref, readonly } from 'vue'
+import { ref, readonly, nextTick } from 'vue'
 import dayjs from 'dayjs'
 import { APP_CONFIG, ERROR_MESSAGES } from '@/utils/constants'
 
@@ -13,6 +13,17 @@ const isSupported = ref('Notification' in window)
 const scheduledNotifications = ref(new Map()) // Map<scheduleId, timeoutId>
 
 export function useNotification() {
+  function navigateToSchedule(scheduleId) {
+    if (!scheduleId) return
+    nextTick(() => {
+      const { router } = window.__APP_CONTEXT__ || {}
+      if (router) {
+        router.push(`/schedule/${scheduleId}`)
+      } else {
+        window.location.hash = `#/schedule/${scheduleId}`
+      }
+    })
+  }
   /**
    * Check if notifications are supported
    */
@@ -178,7 +189,7 @@ export function useNotification() {
       // Handle notification click
       notification.onclick = () => {
         window.focus()
-        // TODO: Navigate to schedule detail
+        navigateToSchedule(schedule.id)
         console.log('Notification clicked:', schedule.id)
         notification.close()
       }
