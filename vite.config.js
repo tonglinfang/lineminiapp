@@ -1,18 +1,11 @@
 import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import react from '@vitejs/plugin-react'
 import path from 'path'
-import Components from 'unplugin-vue-components/vite'
-import { VantResolver } from 'unplugin-vue-components/resolvers'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vue(),
-    // Vant auto-import: automatically import components on demand
-    Components({
-      resolvers: [VantResolver()],
-      dts: false // Disable .d.ts generation for faster builds
-    })
+    react()
   ],
 
   resolve: {
@@ -22,7 +15,6 @@ export default defineConfig({
   },
 
   // GitHub Pages deployment base URL
-  // Change 'lineminiapp' to your actual repo name
   base: process.env.NODE_ENV === 'production'
     ? '/lineminiapp/'
     : '/',
@@ -37,12 +29,11 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets',
     sourcemap: false,
-    // Optimize chunk size
     rollupOptions: {
       output: {
         manualChunks: {
-          'vue-vendor': ['vue', 'vue-router', 'pinia'],
-          'ui-vendor': ['vant']
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'state-vendor': ['zustand']
         }
       }
     }
